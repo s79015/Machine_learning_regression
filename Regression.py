@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # CS909 2020 Assignment 2: Regression   
+# # Regression   
 #     
 
-# # Yerzhan Apsattarov ID (1990463)
+# # Yerzhan Apsattarov 
 
-# Inspired from the LYSTO challenge (https://lysto.grand-challenge.org/LYSTO/), In this assignment, the objective is to develop a regression model for calculating the number of certain type of cells (called lymphocytes) in a given histopathology image patch. For this assignment, all you have to know is that these cells appear in the given image (technically called a immunohistochemistry or IHC image) with a blue nucleus and a brown membrane. Your task is to develop a machine learning model that uses training data (patch images with given cell counts) to predict cell counts in test images.
+# Inspired from the LYSTO challenge (https://lysto.grand-challenge.org/LYSTO/), The objective is to develop a regression model for calculating the number of certain type of cells (called lymphocytes) in a given histopathology image patch. For this assignment, all you have to know is that these cells appear in the given image (technically called a immunohistochemistry or IHC image) with a blue nucleus and a brown membrane. Your task is to develop a machine learning model that uses training data (patch images with given cell counts) to predict cell counts in test images.
 # The data ‘breast.h5’ can be downloaded from: http://shorturl.at/fuCEO
 # The subset of the challenge dataset that you have been given focuses on breast tissue images from a total of 18 different individuals. You can read the data as follows:
 
@@ -58,10 +58,10 @@ list(D.keys())
 # 
 # Training and Testing: Use data from patient IDs 1-13 for training and cross validation and 14-18 for testing. Be sure not to test on the images of patients you have used in your training. Each image is in RGB space so it is represented by an array of size 299x299x3 where the first two dimensions correspond to the width and height of the image and the last three correspond to the R,G and B channel.
 
-# # Question No. 1: (Showing data) [20 Marks]
+# # Question No. 1: (Showing data)
 # Load the training and test data files and answer the following questions:
 
-# i. How many training and test examples are there? [2 marks]
+# i. How many training and test examples are there?
 
 # In[3]:
 
@@ -109,7 +109,7 @@ print("Ytest shape=",Ytest.shape)
 # There are 5841 training and 1563 testing examples.
 
 # ii. Show some image examples using plt.imshow. Describe your observations on what you
-# see in the images and how it correlates with the cell count (target variable). [2 marks]
+# see in the images and how it correlates with the cell count (target variable). []
 
 # In[40]:
 
@@ -127,7 +127,7 @@ for i in range(0,4):
 # As can be seen in the Figures, we can observe that there are blue, brown cells with different intensities. Also there are some arears where brown colour is highly concentrated, but does not have a round shape like cells. According to target variables, we can say that it estimate the brown cells, which clearly expressed. On other hand, I can not see the blue nucleus in these brown cells due to quality of pictures.  
 
 # iii. Plot the histogram of counts. How many images have counts within each of the following
-# bins? [3 marks]
+# bins?
 # 
 # 0 (no lymphocytes)
 # 
@@ -182,7 +182,7 @@ for i in range (len(bins_list)):
 # iv. Pre-processing: Convert and view a few images from RGB space to HED space and show the
 # D channel which should identify the brown elements in the image. For this purpose, you can
 # use the color separation notebook available here: https://scikitimage.org/docs/dev/auto_examples/color_exposure/plot_ihc_color_separation.html [5
-# marks]
+# ]
 
 # In[6]:
 
@@ -210,7 +210,7 @@ for i in range(0,4):
 
 # v. Do a scatter plot of the average of the brown channel for each image vs. its cell count. Do
 # you think this feature would be useful in your regression model? Explain your reasoning. [3
-# marks]
+# ]
 # 
 
 # In[7]:
@@ -233,7 +233,7 @@ plt.scatter(brown_channel,Ytrain)
 # As can be seen in the scatter plot, one can notice that these features might be useful in the regression model. Because we can see a positive correlation. However, there are a lot of outliers, especially which starts on a rectangle from (-0.36,0;-0.36,10). These outliers might have a noticeable impact on the regression model line.
 
 # vi. What is the number of images for each patient? Do you think this can have an impact on
-# your regression model? [2 marks]
+# your regression model? []
 
 # In[15]:
 
@@ -288,7 +288,7 @@ for i in range(1,19):
 # I believe that the number of images can have an impact on the regression model. Because patients have a different number of images. For example, patient with ID "3" has the largest number of images (958, almost 13% of the dataset), whereas a patient with ID "5" has the lowest number of images (44, 0.6% of the dataset). Because each image contains a different number of cells and target values, the linear regression models created by patient ID will have a distinct amount of samples. 
 
 # vii. What performance metrics can you use for this purpose? Which one will be the best
-# performance metric for this problem? Please give reasoning. [3 marks]
+# performance metric for this problem? Please give reasoning. []
 # 
 
 # Anwer:
@@ -312,7 +312,7 @@ for i in range(1,19):
 # According to these Linear regression metrics, I believe that RMSE will be best performance metric for this project. The RMSE is a quadratic scoring rule which measures the average magnitude of the error. The equation for the RMSE is given in both of the references. Expressing the formula in words, the difference between forecast and corresponding observed values are each squared and then averaged over the sample. Finally, the square root of the average is taken. Since the errors are squared before they are averaged, the RMSE gives a relatively high weight to large errors. This means the RMSE is most useful when large errors are particularly undesirable.
 #     
 
-# # Question No. 2: (Feature Extraction and Classical Regression) [50 Marks]
+# # Question No. 2: (Feature Extraction and Classical Regression) []
 # 
 
 # # i. Extract features from a given image. Specifically, calculate the:
@@ -597,7 +597,7 @@ for i in range (270,280):
 
 # Plot the scatter plot and calculate the correlation coefficient of each feature you obtain
 # vs. the target variable (cell count) across all images. Which features do you think are
-# important? Give your reasoning. [20 marks]
+# important? Give your reasoning. ]
 # 
 
 # Answer:
@@ -1100,7 +1100,7 @@ plt.show()
 # 
 # According to results of all channels except "Red channel" show noticeable correlation coefficients in the "Variances" rather than "Averages" of these channels. Considering the "Variances", one can conclude that the Variance of Brown channel represents the best correlation coefficient than other channels. Therefore for regression models, I will use the Variance of Brown channel or brown channel after PCA (which explain 95%) to build the regression models and convolutional neural networks.
 
-# # ii. Try the following regression models with the features used in part-I. You can do 3-fold cross-validation analysis (https://scikit-learn.org/stable/modules/cross_validation.html) to select feature combinations and optimal hyper-parameters for your models. Report your results on the test set by plotting the scatter plot between true and predicted counts for each type of regression model. Also, report your results in terms of RMSE, Correlation Coefficient and R2 score (https://scikitlearn.org/stable/modules/classes.html#module-sklearn.metrics). [30 Marks]
+# # ii. Try the following regression models with the features used in part-I. You can do 3-fold cross-validation analysis (https://scikit-learn.org/stable/modules/cross_validation.html) to select feature combinations and optimal hyper-parameters for your models. Report your results on the test set by plotting the scatter plot between true and predicted counts for each type of regression model. Also, report your results in terms of RMSE, Correlation Coefficient and R2 score (https://scikitlearn.org/stable/modules/classes.html#module-sklearn.metrics). []
 
 # In order to build the regression models I will find brown channel variances for testing and training. The methods will be the same as in a question 1.
 
@@ -1629,7 +1629,7 @@ display(HTML(tabulate.tabulate(table, tablefmt='html')))
 # 
 # According to the results of 4 regression models, one can conclude that Ridge regression model shows the lowest RMSE value with 3.60 and good R2 than others. After that the second best result was represented by Multilayer Perceptron  (Pytorch), where the RMSE is equal to 3.79 and R2=0.45.
 
-# # Question No. 3 (Using Convolutional Neural Networks) [30 Marks]
+# # Question No. 3 (Using Convolutional Neural Networks) []
 # 
 
 # Use a convolutional neural network (in Keras or PyTorch) to solve this problem by directly in much
